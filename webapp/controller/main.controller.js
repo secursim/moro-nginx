@@ -29,7 +29,7 @@ sap.ui.define([
 	var columnsTable, socket;
 	var oLink = new Link({
 		text: "Show more information",
-		target: "_blank"
+		target: "_blank"et
 	});
 	var oMessageTemplate = new MessageItem({
 		type: "Information",
@@ -344,7 +344,7 @@ sap.ui.define([
 			var oModel = new sap.ui.model.json.JSONModel();
 			var oUserModel = oView.getModel("userapi").getData();
 			$.ajax({
-				url: "/MOROCOLOR_HUB/getMacchinari?idcm='" + oUserModel.name + "'",
+				url: "https://morohubdevdng34zaaob.eu3.hana.ondemand.com/moro_hub/odata/getMacchinari?idcm='" + oUserModel.name + "'",
 				type: "GET",
 				data: request,
 				dataType: "text",
