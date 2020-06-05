@@ -346,7 +346,6 @@ sap.ui.define([
 			$.ajax({
 				url: "https://cors-anywhere.herokuapp.com/https://morohubdevdng34zaaob.eu3.hana.ondemand.com/moro_hub/odata/getMacchinari?idcm='" + oUserModel.name + "'",
 				type: "GET",
-				crossDomain: true,
 				data: request,
 				dataType: "text",
 				contentType: "application/x-www-form-urlencoded",
