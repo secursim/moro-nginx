@@ -344,7 +344,7 @@ sap.ui.define([
 			var oModel = new sap.ui.model.json.JSONModel();
 			var oUserModel = oView.getModel("userapi").getData();
 			$.ajax({
-				url: "https://cors-anywhere.herokuapp.com/https://morohubdevdng34zaaob.eu3.hana.ondemand.com/moro_hub/odata/getMacchinari?idcm='" + oUserModel.name + "'",
+				url: "https://morohubdevdng34zaaob.eu3.hana.ondemand.com/moro_hub/odata/getMacchinari?idcm='" + oUserModel.name + "'",
 				type: "GET",
 				data: request,
 				dataType: "text",
