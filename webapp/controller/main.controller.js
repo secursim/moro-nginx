@@ -29,7 +29,7 @@ sap.ui.define([
 	var columnsTable, socket;
 	var oLink = new Link({
 		text: "Show more information",
-		target: "_blank"et
+		target: "_blank"
 	});
 	var oMessageTemplate = new MessageItem({
 		type: "Information",
