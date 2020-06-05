@@ -19,7 +19,7 @@ sap.ui.define([
 ], function (MessagePopover, MessageItem, MessageToast, Link, MessageBox, jQuery, Fragment, Controller, Filter, FilterOperator, JSONModel,
 	Log, socket, Token) {
 	"use strict";
-	var itemSelected = "";Se
+	var itemSelected = "";
 	var ipMacchinarioSelected = "";
 	var sensorIdSelected = "";
 	var itemRipSelected = "";
