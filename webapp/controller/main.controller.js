@@ -19,7 +19,7 @@ sap.ui.define([
 ], function (MessagePopover, MessageItem, MessageToast, Link, MessageBox, jQuery, Fragment, Controller, Filter, FilterOperator, JSONModel,
 	Log, socket, Token) {
 	"use strict";
-	var itemSelected = "";
+	var itemSelected = "";Se
 	var ipMacchinarioSelected = "";
 	var sensorIdSelected = "";
 	var itemRipSelected = "";
@@ -344,7 +344,7 @@ sap.ui.define([
 			var oModel = new sap.ui.model.json.JSONModel();
 			var oUserModel = oView.getModel("userapi").getData();
 			$.ajax({
-				url: "https://morohubdevdng34zaaob.eu3.hana.ondemand.com/moro_hub/MoroServlet,
+				url: "https://morohubdevdng34zaaob.eu3.hana.ondemand.com/moro_hub/MoroServlet",
 				type: "GET",
 				data: request,
 				dataType: "text",
