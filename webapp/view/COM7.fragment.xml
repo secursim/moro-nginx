@@ -1,0 +1,25 @@
+<core:FragmentDefinition xmlns:core="sap.ui.core" xmlns:mvc="sap.ui.core.mvc" xmlns:l="sap.ui.layout" xmlns="sap.m">
+	<Dialog title="Kanban" contentWidth="30%" contentHeight="30%"  class="sapUiContentPadding" escapeHandler="onExit">
+		<Page id="detail" title="Kanban" enableScrolling="true" showNavButton="false">
+			<VBox class="sapUiSmallMargin">
+				<Label text="Articolo">
+					<layoutData>
+						<l:GridData span="L2 M3 S6" indentL="0"/>
+					</layoutData>
+				</Label>
+				<Input value="" id="inp_art">
+					<layoutData>
+						<l:GridData span="L2 M3 S6" indentL="0"/>
+					</layoutData>
+				</Input>
+			</VBox>
+			<footer>
+				<OverflowToolbar>
+					<ToolbarSpacer/>
+					<Button text="Conferma" press="onConfirmCOM7" class="button"/>
+					<Button text="Cancella" press="onExit" class="button"/>
+				</OverflowToolbar>
+			</footer>
+		</Page>
+	</Dialog>
+</core:FragmentDefinition>

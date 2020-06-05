@@ -1,0 +1,94 @@
+{
+  "welcomeFile": "/webapp/index.html",
+  "routes": [
+    {
+      "path": "/resources",
+      "target": {
+        "type": "service",
+        "name": "sapui5",
+        "entryPath": "/resources"
+      },
+      "description": "SAPUI5 Resources"
+    },
+    {
+      "path": "/test-resources",
+      "target": {
+        "type": "service",
+        "name": "sapui5",
+        "entryPath": "/test-resources"
+      },
+      "description": "SAPUI5 Resources"
+    },
+    {
+      "path": "/webapp/resources",
+      "target": {
+        "type": "service",
+        "name": "sapui5",
+        "entryPath": "/resources"
+      },
+      "description": "SAPUI5 Resources"
+    },
+    {
+      "path": "/webapp/test-resources",
+      "target": {
+        "type": "service",
+        "name": "sapui5",
+        "entryPath": "/test-resources"
+      },
+      "description": "SAPUI5 Test Resources"
+    },
+    {
+      "path": "/services/userapi",
+      "target": {
+        "type": "service",
+        "name": "userapi"
+      }
+    },
+    {
+      "path": "/apihub_sandbox",
+      "target": {
+        "type": "application",
+        "name": "webidecp",
+        "entryPath": "/destinations/apihub_sandbox"
+      },
+      "description": "SAP API Business Hub - Sandbox end point"
+    },
+    {
+      "path": "/MOROCOLOR_HUB",
+      "target": {
+        "type": "destination",
+        "name": "MOROCOLOR_HUB"
+      },
+      "description": "MOROCOLOR_HUB"
+    },
+    {
+      "path": "/moro_hub/odata/",
+      "target": {
+        "type": "destination",
+        "name": "MOROCOLOR_HUB"
+      },
+      "description": "MOROCOLOR_HUB"
+    },
+    {
+      "path": "/sap/opu/odata",
+      "target": {
+        "type": "destination",
+        "name": "MORO_S4",
+        "entryPath": "/sap/opu/odata"
+      },
+      "description": "Sistema S4  MoroColor Cloning"
+    },
+    {
+      "path": "/getPort",
+      "target": {
+        "type": "destination",
+        "name": "getPort"
+      },
+      "description": "Url per connessione socket.io"
+    }
+  ],
+  "sendWelcomeFileRedirect": true,
+  "headerWhiteList": [
+    "apiKey"
+  ]
+}
