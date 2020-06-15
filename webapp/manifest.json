@@ -102,7 +102,7 @@
 			"routes": [
 				{
 					"name": "main",
-					"pattern": "moro",
+					"pattern": "",
 					"target": [
 						"main"
 					]
