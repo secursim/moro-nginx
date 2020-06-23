@@ -113,6 +113,7 @@
 									<items>
 										<Input width="20rem" id="txtLogin" placeholder="User ID" valueLiveUpdate="true" submit="onLogin" required="true" value="{cid}"/>
 										<Button icon="sap-icon://visits" width="20rem" text="{impianto}" press="onLogin" id="btnLogin" class="button"/>
+										<Button icon="sap-icon://call" width="5rem" text="{chiamata}" press="onChiamataPress" class="button"/>
 										<CheckBox id="chkTeamLeader" text="Team leader" valueState="Information" selected="{chkTeamLeader}"/>
 									</items>
 								</VBox>
