@@ -93,7 +93,7 @@
 								<VBox fitContainer="true" visible="{= ${login} === 'false'}" class="sapUiSmallMargin loginForm" justifyContent="Center" alignItems="Center"
 									alignContent="Center">
 -->
-                                <VBox fitContainer="true" visible="{= ${login} === 'false'}" class="sapUiSmallMargin loginForm" justifyContent="Center" alignItems="Center" alignContent="Center">
+                                <VBox fitContainer="true" class="sapUiSmallMargin loginForm" justifyContent="Center" alignItems="Center" alignContent="Center">
                                     <items>
                                         <Input width="20rem" id="txtLogin" placeholder="User ID" valueLiveUpdate="true" submit="onLogin" required="true" value="{cid}" />
                                         <Button icon="sap-icon://visits" width="20rem" text="{impianto}" press="onLogin" id="btnLogin" class="button" />
