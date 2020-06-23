@@ -406,11 +406,11 @@ sap.ui.define([
                 data: "",
                 dataType: "text",
                 contentType: "application/x-www-form-urlencoded",
-                success: function (evt) {
-                    MessageBox.success("Successo! \n" + evt);
+                success: function () {
+                    MessageBox.success("Successo!");
                 }.bind(this),
                 error: function (err) {
-                    MessageBox.success("Errore! \n" + err);
+                    MessageBox.error("Errore!");
                 }
             });
         },
