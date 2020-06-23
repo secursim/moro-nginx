@@ -74,7 +74,7 @@ sap.ui.define([
                 oClock.setText(result);
             }.bind(this), 1000);
 
-            this._getSocketPort();
+            //            this._getSocketPort();
         },
 
         _getSocketPort: function () {
@@ -233,7 +233,7 @@ sap.ui.define([
                 name: userLogged
             });
             this.getView().setModel(userModel, "userapi");
-            this.getMacchinari();
+            //            this.getMacchinari();
             var oTabContainer = this.getView().byId("myTabContainer");
             oTabContainer.addStyleClass("tabContainer");
             oTabContainer.addEventDelegate({
