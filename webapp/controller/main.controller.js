@@ -399,7 +399,7 @@ sap.ui.define([
         },
 
         onChiamataPress: function () {
-            var url = "http://test-quarkus.apps.poc-oc.poc.oc/greeting";
+            var url = "http://java-app-quarkus.apps.poc-oc.poc.oc/hello";
             $.ajax({
                 url: url,
                 type: "GET",
