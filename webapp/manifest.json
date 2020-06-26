@@ -78,11 +78,6 @@
 				{
 					"uri": "libs/lodash.js"
 				}
-			],
-			"socket": [
-				{
-					"uri": "libs/socket.js"
-				}
 			]
 		},
 		"routing": {
