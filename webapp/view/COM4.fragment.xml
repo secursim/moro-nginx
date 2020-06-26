@@ -1,0 +1,53 @@
+<core:FragmentDefinition xmlns="sap.m" xmlns:l="sap.ui.layout" xmlns:f="sap.ui.layout.form" xmlns:table="sap.ui.table"
+	class="sapUiSizeCompact" xmlns:core="sap.ui.core">
+	<Dialog showHeader="false" contentWidth="60%" contentHeight="80%" escapeHandler="onExit">
+		<Page title="Inserire causale sospensione per {/itemSelected}" enableScrolling="true" showNavButton="false" navButtonPress="onNavBack">
+			<Table id="tblCausali" alternateRowColors='true' sticky="HeaderToolbar,InfoToolbar,ColumnHeaders"
+				items="{ path: '/causali', sorter : { path : 'descrizione', descending : false }, templateShareable:true}" growing="true"
+				includeItemInSelection="true" mode="SingleSelectLeft" modeAnimationOn="true">
+				<columns>
+					<Column width="15rem">
+						<header>
+							<Text text="Descrizione"/>
+						</header>
+					</Column>
+					<Column>
+						<header>
+							<Text text="Note causali"/>
+						</header>
+					</Column>
+					<Column>
+						<header>
+							<Text text="Azione richiesta"/>
+						</header>
+					</Column>
+					<Column>
+						<header>
+							<Text text="Note azioni"/>
+						</header>
+					</Column>
+				</columns>
+				<items>
+					<ColumnListItem>
+						<cells>
+							<ObjectIdentifier title="{descrizione}"/>
+							<Input value="{notecausali}"/>
+							<ComboBox showSecondaryValues="true" change="onAzioniChange" items="{ path: 'azioni', sorter: { path: 'descrizione' }}"
+								selectedKey="{azioni/chiave}" visible="{azione}">
+								<core:Item key="{chiave}" text="{descrizione}"/>
+							</ComboBox>
+							<Input value="{noteazioni}" visible="{azione}"/>
+						</cells>
+					</ColumnListItem>
+				</items>
+			</Table>
+			<footer>
+				<OverflowToolbar>
+					<ToolbarSpacer/>
+					<Button text="Conferma" press="onConfirmCOM4" class="button"/>
+					<Button text="Cancella" press="onConfirmCOM4" class="button"/>
+				</OverflowToolbar>
+			</footer>
+		</Page>
+	</Dialog>
+</core:FragmentDefinition>
