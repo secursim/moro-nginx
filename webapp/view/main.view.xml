@@ -3,16 +3,18 @@
 	<App id="app" autoFocus="false" backgroundOpacity="0.1">
 		<Page class="sapUiContentPadding" showNavButton="false" enableScrolling="false">
 			<headerContent>
-				<Title text="{i18n>title}"/>
-				<Select selectedKey="{userLoggedModel>/userLogged}" enabled="{= !${userLoggedModel>/isLogged}}" change="onChangeUser" forceSelection="false">
-					<core:ListItem key="P000025" text="P000025"/>
-					<core:ListItem key="P000032" text="P000032"/>
-				</Select>
+				<Title text="{i18n>title} {userLoggedModel>/userLogged}" visible="{= !!${userLoggedModel>/userLogged}}"/>
 				<HBox justifyContent="Center">
 					<Label id="oClock" design="Bold"/>
 				</HBox>
 			</headerContent>
 			<content>
+				<VBox fitContainer="true" visible="{= ${login} === 'false'}" class="sapUiSmallMargin loginForm" justifyContent="Center" alignItems="Center"
+					alignContent="Center">
+					<items>
+						<core:Fragment fragmentName="it.greenorange.mes.view.userSelect" type="XML"/>
+					</items>
+				</VBox>
 				<TabContainer items="{ path: '/impianti' }" id="myTabContainer" itemSelect="onItemSelected">
 					<items>
 						<TabContainerItem name="{impianto}" additionalText="{ipMacchinario}" id="myTabContainerItem" icon="{icon}" modified="false"
@@ -111,6 +113,7 @@
 								<VBox fitContainer="true" visible="{= ${login} === 'false'}" class="sapUiSmallMargin loginForm" justifyContent="Center" alignItems="Center"
 									alignContent="Center">
 									<items>
+										<core:Fragment fragmentName="it.greenorange.mes.view.userSelect" type="XML"/>
 										<Input width="20rem" id="txtLogin" placeholder="User ID" valueLiveUpdate="true" submit="onLogin" required="true" value="{cid}"/>
 										<Button icon="sap-icon://visits" width="20rem" text="{impianto}" press="onLogin" id="btnLogin" class="button"/>
 										<CheckBox id="chkTeamLeader" text="Team leader" valueState="Information" selected="{chkTeamLeader}"/>

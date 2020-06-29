@@ -1,0 +1,11 @@
+<core:FragmentDefinition xmlns:core="sap.ui.core" xmlns="sap.m">
+	<VBox>
+		<FlexBox justifyContent="Center">
+			<Title text="Gruppo macchinari"/>
+		</FlexBox>
+		<Select width="20rem" selectedKey="{userLoggedModel>/userLogged}" change="onChangeUser" forceSelection="false">
+			<core:ListItem key="P000025" text="P000025"/>
+			<core:ListItem key="P000032" text="P000032"/>
+		</Select>
+	</VBox>
+</core:FragmentDefinition>

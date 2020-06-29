@@ -12,12 +12,9 @@ sap.ui.define([
 	"sap/ui/model/Filter",
 	"sap/ui/model/FilterOperator",
 	"sap/ui/model/json/JSONModel",
-	"sap/base/Log",
-	"it/greenorange/mes/libs/socket",
-	"sap/m/Token",
 	"it/greenorange/mes/model/OdataService"
 ], function (MessagePopover, MessageItem, MessageToast, Link, MessageBox, jQuery, Fragment, Controller, Filter, FilterOperator, JSONModel,
-	Log, socket, Token, OdataService) {
+	OdataService) {
 	"use strict";
 	var itemSelected = "";
 	var ipMacchinarioSelected = "";
@@ -26,7 +23,7 @@ sap.ui.define([
 	var operationSelected = "";
 	var getUrl = "";
 	var oVersion = "1.0";
-	var columnsTable, socket;
+	var columnsTable;
 	var oLink = new Link({
 		text: "Show more information",
 		target: "_blank"
@@ -37,14 +34,6 @@ sap.ui.define([
 		activeTitle: false
 	});
 	var domainUrl = OdataService.getUrl();
-	var hostnamePath = location.hostname;
-	var urlSocket = "cbu01esmasthokbma-nodejsserverdev.cfapps.eu10.hana.ondemand.com/";
-	var port = 63460;
-	if (hostnamePath.indexOf("ijkyq6bcfi") > 0) {
-		// entro qui dentro se sono in produzione
-		urlSocket = "lPW2plBdd8Y4Qj93rMTA-NodeJsServer.cfapps.eu10.hana.ondemand.com/";
-		port = 54827;
-	}
 
 	return Controller.extend("it.greenorange.mes.controller.main", {
 		cid: [],
@@ -54,7 +43,7 @@ sap.ui.define([
 			var userLoggedModel = new sap.ui.model.json.JSONModel();
 			userLoggedModel.setProperty("/isLogged", false);
 			this.getView().setModel(userLoggedModel, "userLoggedModel");
-			
+
 			this._mViewSettingsDialogs = {};
 			var oPromise = sap.ui.getVersionInfo({
 				async: true
@@ -102,6 +91,7 @@ sap.ui.define([
 					for (var i = 0; i < oItems.length; i++) {
 						if (oItems[i].getId() === selectedItem) {
 							itemSelected = oItems[i].getText();
+							ipMacchinarioSelected = oItems[i].getAdditionalText();
 						}
 						var oCloseButton = oItems[i].getAggregation("_closeButton");
 						oCloseButton.setVisible(false);
@@ -112,8 +102,7 @@ sap.ui.define([
 
 		GetClock: function () {
 			var tday = new Array("Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday");
-			var tmonth = new Array("January", "February", "March", "April", "May", "June", "July", "August", "September", "October",
-				"November",
+			var tmonth = new Array("January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November",
 				"December");
 			var d = new Date();
 			var nday = d.getDay(),
@@ -124,7 +113,7 @@ sap.ui.define([
 				nmin = d.getMinutes(),
 				nsec = d.getSeconds(),
 				ap;
-			if (nhour === 0) {
+			if (!nhour) {
 				ap = " AM";
 				nhour = 12;
 			} else if (nhour < 12) {
@@ -165,7 +154,6 @@ sap.ui.define([
 			var oUserModel = oView.getModel("userapi").getData();
 			$.ajax({
 				url: domainUrl + "getMacchinari?idcm='" + oUserModel.name + "'",
-				// url: "/MOROCOLOR_HUB/getMacchinari?idcm='" + oUserModel.name + "'",
 				type: "GET",
 				data: request,
 				dataType: "text",
@@ -232,7 +220,7 @@ sap.ui.define([
 					var idcm = oUserModel.name;
 					var ipmacchinario = row.ipMacchinario;
 					var chkLeader = row.chkTeamLeader;
-					getUrl = "/MOROCOLOR_HUB/loginMacchinario?idcm='" + oUserModel.name + "'&ipmacchinario='" + row.ipMacchinario + "'&cid='"; // +	leader + "'";
+					getUrl = domainUrl + "loginMacchinario?idcm='" + oUserModel.name + "'&ipmacchinario='" + row.ipMacchinario + "'&cid='"; // +	leader + "'";
 				}
 			}
 			// triggers validation
@@ -321,7 +309,7 @@ sap.ui.define([
 				});
 			};
 			if (selectedMacchinario.sensorId) {
-				var logoutUrl = "/MOROCOLOR_HUB/com2?sensorid='" + selectedMacchinario.sensorId + "'&completo=true";
+				var logoutUrl = domainUrl + "com2?sensorid='" + selectedMacchinario.sensorId + "'&completo=true";
 				$.ajax({
 					url: logoutUrl,
 					type: "GET",
@@ -456,7 +444,7 @@ sap.ui.define([
 					var idcm = oUserModel.name;
 					var ipmacchinario = row.ipMacchinario;
 					var chkLeader = row.chkTeamLeader;
-					getUrl = "/MOROCOLOR_HUB/loginMacchinario?idcm='" + idcm + "'&ipmacchinario='" + ipmacchinario + "'&cid='"; // +	leader + "'";
+					getUrl = domainUrl + "loginMacchinario?idcm='" + idcm + "'&ipmacchinario='" + ipmacchinario + "'&cid='"; // +	leader + "'";
 				}
 			}
 			// triggers validation
@@ -537,7 +525,7 @@ sap.ui.define([
 			var idSessione = macchinario.idsessione;
 			var ipMacchinario = macchinario.ipMacchinario
 			var cidValue = oUsersDialogModel.getProperty("/inputValue");
-			var url = "/MOROCOLOR_HUB/aggiungiUtente" +
+			var url = domainUrl + "aggiungiUtente" +
 				"?ipmacchinario='" + ipMacchinario + "'&cid='" + cidValue + "'&idsessione='" + idSessione + "'";
 			this.usersDialog.setBusy(true);
 			$.ajax({
@@ -596,7 +584,7 @@ sap.ui.define([
 				}
 			}
 			var oUserModel = oView.getModel("userapi").getData();
-			getUrl = "/MOROCOLOR_HUB/getBancali" +
+			getUrl = domainUrl + "getBancali" +
 				"?ipmacchinario='" + ipMacchinario + "'";
 			sap.ui.core.BusyIndicator.show();
 			$.ajax({
@@ -671,7 +659,7 @@ sap.ui.define([
 				}
 			}
 			var oUserModel = oView.getModel("userapi").getData();
-			getUrl = "/MOROCOLOR_HUB/getBancali";
+			getUrl = domainUrl + "getBancali";
 			sap.ui.core.BusyIndicator.show();
 			$.ajax({
 				url: getUrl,
@@ -777,7 +765,7 @@ sap.ui.define([
 				}
 			}
 
-			getUrl = "/MOROCOLOR_HUB/getScheda?ordine='" +
+			getUrl = domainUrl + "getScheda?ordine='" +
 				oBindingObject.ordine +
 				"'&operazione='" +
 				oBindingObject.operazione + "'";
@@ -851,7 +839,7 @@ sap.ui.define([
 			});
 			var ipmacchinario = macchinario.ipMacchinario;
 			var bancali = macchinario.bancali;
-			getUrl = "/MOROCOLOR_HUB/riep?ordine='" +
+			getUrl = domainUrl + "riep?ordine='" +
 				oBindingObject.ordine +
 				"'&operazione='" +
 				oBindingObject.operazione +
@@ -1013,7 +1001,7 @@ sap.ui.define([
 			var azione = selectedSospensione.azione ? selectedSospensione.azione : "";
 			var noteCausali = selectedSospensione.noteCausali ? selectedSospensione.noteCausali : "";
 			var noteAzioni = selectedSospensione.noteAzioni ? selectedSospensione.noteAzioni : "";
-			getUrl = "/MOROCOLOR_HUB/updateSospensioneRiep?progressivo=" + selectedSospensione.progressivo + "&causale='" + causale +
+			getUrl = domainUrl + "updateSospensioneRiep?progressivo=" + selectedSospensione.progressivo + "&causale='" + causale +
 				"'&notecausale='" + noteCausali + "'&azione='" + azione + "'&noteazione='" + noteAzioni +
 				"'";
 			sap.ui.core.BusyIndicator.show();
@@ -1352,7 +1340,7 @@ sap.ui.define([
 			var response = "";
 			var oModel = new sap.ui.model.json.JSONModel();
 			var oUserModel = oView.getModel("userapi").getData();
-			getUrl = "/MOROCOLOR_HUB/com1?ordine='" + ordine + "'&operazione='" + operazione + "'&ipmacchinario='" + ipmacchinario +
+			getUrl = domainUrl + "com1?ordine='" + ordine + "'&operazione='" + operazione + "'&ipmacchinario='" + ipmacchinario +
 				"'&idsessione='" + idsessione + "'";
 			sap.ui.core.BusyIndicator.show();
 			$.ajax({
@@ -1501,13 +1489,13 @@ sap.ui.define([
 			if (typeof (oEvent) !== "undefined") {
 				if (checkUsers(operatore, cid)) {
 					completo = checkCompleto(operatore, cid);
-					getUrl = "/MOROCOLOR_HUB/com2?idsessione='" + idsessione + "'&ipmacchinario='" + ipmacchinario + "'&operatore='" +
+					getUrl = domainUrl + "com2?idsessione='" + idsessione + "'&ipmacchinario='" + ipmacchinario + "'&operatore='" +
 						operatore + "'&completo=" + completo;
 					sendCOM2(that, getUrl, operatore, completo);
 				}
 			} else {
 				completo = true;
-				getUrl = "/MOROCOLOR_HUB/com2?idsessione='" + idsessione + "'&ipmacchinario='" + ipmacchinario + "'&operatore='" +
+				getUrl = domainUrl + "com2?idsessione='" + idsessione + "'&ipmacchinario='" + ipmacchinario + "'&operatore='" +
 					operatore + "'&completo=" + completo;
 				sendCOM2(that, getUrl, operatore, completo);
 			}
@@ -1697,9 +1685,9 @@ sap.ui.define([
 			var operatore = selectedMacchinario.cid;
 			var ipmacchinario = selectedMacchinario.ipMacchinario;
 			if (!ordine) {
-				getUrl = "/MOROCOLOR_HUB/getCausali?operatore='" + operatore + "'&ipmacchinario='" + ipmacchinario + "'&causale='SIOT'";
+				getUrl = domainUrl + "getCausali?operatore='" + operatore + "'&ipmacchinario='" + ipmacchinario + "'&causale='SIOT'";
 			} else {
-				getUrl = "/MOROCOLOR_HUB/getCausali?ordine='" + ordine + "'&operazione='" + operazione +
+				getUrl = domainUrl + "getCausali?ordine='" + ordine + "'&operazione='" + operazione +
 					"'&operatore='" + operatore + "'&ipmacchinario='" + ipmacchinario + "'&causale='SIOT'";
 			}
 			sap.ui.core.BusyIndicator.show();
@@ -1839,7 +1827,7 @@ sap.ui.define([
 							azione = oModelCOM4.oData.causali[idx].azioneSelected;
 							noteazioni = oModelCOM4.oData.causali[idx].noteazioni;
 						}
-						getUrl = "/MOROCOLOR_HUB/com4?ordine='" + ordine + "'&operazione='" + operazione +
+						getUrl = domainUrl + "com4?ordine='" + ordine + "'&operazione='" + operazione +
 							"'&operatore='" + operatore + "'&ipmacchinario='" + ipmacchinario + "'&causale='" + causale + "'&azione='" + azione +
 							"'&notecausali='" + notecausali + "'&noteazioni='" + noteazioni + "'";
 						sendCOM4(that, getUrl);
@@ -1850,7 +1838,7 @@ sap.ui.define([
 					notecausali = "";
 					azione = "";
 					noteazioni = "";
-					getUrl = "/MOROCOLOR_HUB/com4?ordine='" + ordine + "'&operazione='" + operazione +
+					getUrl = domainUrl + "com4?ordine='" + ordine + "'&operazione='" + operazione +
 						"'&operatore='" + operatore + "'&ipmacchinario='" + ipmacchinario + "'&causale='" + causale + "'&azione='" + azione +
 						"'&notecausali='" + notecausali + "'&noteazioni='" + noteazioni + "'";
 					sendCOM4(that, getUrl);
@@ -1962,7 +1950,7 @@ sap.ui.define([
 				delete(row.stoppedMeasure);
 			}
 
-			var getUrl = "/MOROCOLOR_HUB/com4?ordine='" + ordine + "'&operazione='" + operazione +
+			var getUrl = domainUrl + "com4?ordine='" + ordine + "'&operazione='" + operazione +
 				"'&operatore='" + operatore + "'&ipmacchinario='" + ipmacchinario + "'&causale='FINE'";
 			sendCOM4(that, getUrl);
 
@@ -2095,7 +2083,7 @@ sap.ui.define([
 				sap.ui.core.BusyIndicator.hide();
 				return;
 			}
-			getUrl = "/MOROCOLOR_HUB/getBancali" +
+			getUrl = domainUrl + "getBancali" +
 				"?ipmacchinario='" + oOperazioneModel.ipMacchinario + "'";
 			sap.ui.core.BusyIndicator.show();
 			$.ajax({
@@ -2394,7 +2382,7 @@ sap.ui.define([
 			if (completo || (!completo && parseFloat(oModelCOM4emezzo.oData.pf) >= oModelCOM4emezzo.oData.quantitaResiduadaVersare)) {
 				versfin = true;
 			}
-			getUrl = "/MOROCOLOR_HUB/checkObbligatorieta" +
+			getUrl = domainUrl + "checkObbligatorieta" +
 				"?ordine='" + oModelCOM4emezzo.oData.ordine + "'&operazione='" + oModelCOM4emezzo.oData.operazione + "'&versfin=" + versfin;
 			sap.ui.core.BusyIndicator.show();
 			$.ajax({
@@ -2485,7 +2473,7 @@ sap.ui.define([
 			}
 			var scartoToSend = !dataModel.scarto ? 0 : parseFloat(dataModel.scarto);
 			if (!idbancale) {
-				var getUrl = "/MOROCOLOR_HUB/com5?" +
+				var getUrl = domainUrl + "com5?" +
 					"ordine='" + dataModel.ordine +
 					"'&operazione='" + dataModel.operazione +
 					"'&ipmacchinario='" + dataModel.ipMacchinario +
@@ -2496,7 +2484,7 @@ sap.ui.define([
 					"&noteazioni='" + noteazioni +
 					"'&idsessione='" + dataModel.idsessione + "'";
 			} else {
-				var getUrl = "/MOROCOLOR_HUB/com5?" +
+				var getUrl = domainUrl + "com5?" +
 					"ordine='" + dataModel.ordine +
 					"'&operazione='" + dataModel.operazione +
 					"'&ipmacchinario='" + dataModel.ipMacchinario +
@@ -2735,7 +2723,7 @@ sap.ui.define([
 					var lottoToSend = componentToSend.newLotto ? componentToSend.newLotto : "";
 					var scartoToSend = !componentToSend.scarto ? "0" : componentToSend.scarto;
 					var consumoToSend = !componentToSend.consumoConfermato ? "0" : componentToSend.consumoConfermato;
-					var getUrl = "/MOROCOLOR_HUB/com4emezzo?" +
+					var getUrl = domainUrl + "com4emezzo?" +
 						"&ordine='" + oModelCOM4emezzo.oData.ordine +
 						"'&operazione='" + oModelCOM4emezzo.oData.operazione +
 						"'&componente='" + componentToSend.componente +
@@ -2915,7 +2903,7 @@ sap.ui.define([
 				this._oDialog = undefined;
 			}
 
-			var getUrl = "/MOROCOLOR_HUB/lanciaLaw?" +
+			var getUrl = domainUrl + "lanciaLaw?" +
 				"ordine='" + oModelLanciaLawe.oData.ordine +
 				"'&operazione='" + oModelLanciaLawe.oData.operazione +
 				"'&sequenza='" + oModelLanciaLawe.oData.sequenza +
@@ -3013,7 +3001,7 @@ sap.ui.define([
 					ipMacchinario = row.ipMacchinario;
 				}
 			}
-			var getUrl = "/MOROCOLOR_HUB/refresh?" +
+			var getUrl = domainUrl + "refresh?" +
 				"'&ipmacchinario='" + ipMacchinario + "'";
 			sendRefresh(that, getUrl);
 
@@ -3165,7 +3153,7 @@ sap.ui.define([
 					ipmacchinario = row.ipMacchinario;
 				}
 			}
-			var getUrl = "/MOROCOLOR_HUB/com7?" +
+			var getUrl = domainUrl + "com7?" +
 				"articolo='" + articolo +
 				"'&idsessione='" + idsessione +
 				"'&ipmacchinario='" + ipmacchinario +
@@ -3358,7 +3346,7 @@ sap.ui.define([
 
 			switch (printID) {
 			case 0: // Stampa etichette
-				var getUrl = "/MOROCOLOR_HUB/stampaTermica?" +
+				var getUrl = domainUrl + "stampaTermica?" +
 					"ordine='" + oModel.oData.ordine +
 					"'&operazione='" + oModel.oData.operazione +
 					"'&tipo='" + "T" +
@@ -3370,7 +3358,7 @@ sap.ui.define([
 				stampa = "stampaTermica";
 				break;
 			case 1: // Marcatore Laser
-				var getUrl = "/MOROCOLOR_HUB/stampaMarcatoreLaser?" +
+				var getUrl = domainUrl + "stampaMarcatoreLaser?" +
 					"ordine='" + oModel.oData.ordine +
 					"'&operazione='" + oModel.oData.operazione +
 					"'&ipmacchinario='" + oModel.oData.ipMacchinario +
@@ -3378,7 +3366,7 @@ sap.ui.define([
 				stampa = "stampaMarcatoreLaser";
 				break;
 			case 2: // Stampa tipo Q
-				var getUrl = "/MOROCOLOR_HUB/stampaTermica?" +
+				var getUrl = domainUrl + "stampaTermica?" +
 					"ordine='" + oModel.oData.ordine +
 					"'&operazione='" + oModel.oData.operazione +
 					"'&tipo='" + "Q" +
