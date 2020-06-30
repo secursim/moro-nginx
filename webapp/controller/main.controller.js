@@ -79,7 +79,7 @@ sap.ui.define([
 		_getUserLogged: function (data) {
 			var userModel;
 			if (!this.getView().getModel("userapi")) {
-				userModel = new sap.ui.model.json.JSONModel();	
+				userModel = new sap.ui.model.json.JSONModel();
 				this.getView().setModel(userModel, "userapi");
 			} else {
 				userModel = this.getView().getModel("userapi");
@@ -180,15 +180,7 @@ sap.ui.define([
 			});
 
 			function getMacchinariModel() {
-				var parser = new DOMParser();
-				var oData;
-				if (typeof(response) === "string" && response.indexOf("400") > 0) {
-					oData = JSON.parse(response);
-				} else {
-					var xmlDoc = parser.parseFromString(response, "text/xml");
-					var returnVal = xmlDoc.getElementsByTagName("getMacchinari")[0].childNodes[0].nodeValue;
-					oData = $.parseJSON(returnVal);
-				}
+				var oData = JSON.parse(response);
 				if (oData.response.Status !== 200) {
 					var msgError = !!that.getView().$().closest(".sapUiSizeCompact").length;
 					MessageBox.error(
@@ -346,10 +338,7 @@ sap.ui.define([
 		getLoginMacchinarioModel: function (oView, oArray, response, getUrl) {
 			var that = this;
 			var oModel = new sap.ui.model.json.JSONModel();
-			var parser = new DOMParser();
-			var xmlDoc = parser.parseFromString(response, "text/xml");
-			var returnVal = xmlDoc.getElementsByTagName("loginMacchinario")[0].childNodes[0].nodeValue;
-			var oData = $.parseJSON(returnVal);
+			var oData = JSON.parse(response);
 			if (oData.response.Status !== 200) {
 				var msgleader = !!that.getView().$().closest(".sapUiSizeCompact").length;
 				MessageBox.error(
@@ -546,28 +535,20 @@ sap.ui.define([
 				dataType: "text",
 				contentType: "application/x-www-form-urlencoded",
 				success: function (data, textStatus, jqXHR) {
-					var parser = new DOMParser();
-					var xmlDoc = parser.parseFromString(data, "text/xml");
-					var elementByTagName = xmlDoc.getElementsByTagName("aggiungiUtente");
-					if (elementByTagName.length && elementByTagName[0].childNodes.length) {
-						var returnVal = elementByTagName[0].childNodes[0].nodeValue;
-						var oData = $.parseJSON(returnVal);
-						if (oData.response.Status === 200) {
-							// se sto aggiungendo un macchinario significa che sono teamLeader e quindi setto la seguente proprietà a true
-							macchinario.chkTeamLeader = true;
-							var newUserLogged = oData.utente;
-							macchinario.cid += "-" + newUserLogged.cid;
-							macchinario.operatori.accettati.push(newUserLogged);
-							var viewModel = this.getView().getModel();
-							viewModel.refresh();
-							this.getView().setModel(this.getMacchinarioUserLoggedIn(viewModel), "usersModel");
-							this.modelUpdateCid(macchinario.cid);
-							oUsersDialogModel.setProperty("/inputValue", "");
-						} else {
-							showMessageError(oData.response.Message);
-						}
+					var oData = JSON.parse(response);
+					if (oData.response.Status === 200) {
+						// se sto aggiungendo un macchinario significa che sono teamLeader e quindi setto la seguente proprietà a true
+						macchinario.chkTeamLeader = true;
+						var newUserLogged = oData.utente;
+						macchinario.cid += "-" + newUserLogged.cid;
+						macchinario.operatori.accettati.push(newUserLogged);
+						var viewModel = this.getView().getModel();
+						viewModel.refresh();
+						this.getView().setModel(this.getMacchinarioUserLoggedIn(viewModel), "usersModel");
+						this.modelUpdateCid(macchinario.cid);
+						oUsersDialogModel.setProperty("/inputValue", "");
 					} else {
-						showMessageError();
+						showMessageError(oData.response.Message);
 					}
 					this.usersDialog.setBusy(false);
 				}.bind(this),
@@ -715,10 +696,7 @@ sap.ui.define([
 		},
 
 		getBancaliModel: function (response, oModel, that) {
-			var parser = new DOMParser();
-			var xmlDoc = parser.parseFromString(response, "text/xml");
-			var returnVal = xmlDoc.getElementsByTagName("getBancali")[0].childNodes[0].nodeValue;
-			var oData = $.parseJSON(returnVal);
+			var oData = JSON.parse(response);
 			if (oData.response.Status !== 200) {
 				var msgError = !!that.getView().$().closest(".sapUiSizeCompact").length;
 				MessageBox.error(
@@ -906,10 +884,7 @@ sap.ui.define([
 			});
 
 			function getRiepilogoModel() {
-				var parser = new DOMParser();
-				var xmlDoc = parser.parseFromString(response, "text/xml");
-				var returnVal = xmlDoc.getElementsByTagName("riep")[0].childNodes[0].nodeValue;
-				var oData = $.parseJSON(returnVal);
+				var oData = JSON.parse(response);
 				if (oData.response.Status !== 200) {
 					var msgError = !!that.getView().$().closest(".sapUiSizeCompact").length;
 					MessageBox.error(
@@ -1031,10 +1006,7 @@ sap.ui.define([
 				},
 				complete: function (xhr, status) {
 					sap.ui.core.BusyIndicator.hide();
-					var parser = new DOMParser();
-					var xmlDoc = parser.parseFromString(response, "text/xml");
-					var returnVal = xmlDoc.getElementsByTagName("updateSospensioneRiep")[0].childNodes[0].nodeValue;
-					var oData = $.parseJSON(returnVal);
+				var oData = JSON.parse(response);
 					if (oData.response.Status !== 200) {
 						var msgError = !!this.getView().$().closest(".sapUiSizeCompact").length;
 						MessageBox.error(
@@ -1377,10 +1349,7 @@ sap.ui.define([
 
 			function getCom1Model(that) {
 				var oArray = that.getView().getModel().getData();
-				var parser = new DOMParser();
-				var xmlDoc = parser.parseFromString(response, "text/xml");
-				var returnVal = xmlDoc.getElementsByTagName("com1")[0].childNodes[0].nodeValue;
-				var oData = $.parseJSON(returnVal);
+				var oData = JSON.parse(response);
 				if (oData.response.Status !== 200) {
 					var msgError = !!that.getView().$().closest(".sapUiSizeCompact").length;
 					MessageBox.error(
@@ -1576,10 +1545,7 @@ sap.ui.define([
 
 			function getCom2Model(that, operatore, completo) {
 				var oArray = that.getView().getModel().getData();
-				var parser = new DOMParser();
-				var xmlDoc = parser.parseFromString(response, "text/xml");
-				var returnVal = xmlDoc.getElementsByTagName("com2")[0].childNodes[0].nodeValue;
-				var oData = $.parseJSON(returnVal);
+				var oData = JSON.parse(response);
 				if (oData.response.Status !== 200) {
 					var msgError = !!that.getView().$().closest(".sapUiSizeCompact").length;
 					MessageBox.error(
@@ -1743,10 +1709,7 @@ sap.ui.define([
 
 			function getCausaliModel(that) {
 				var oArray = that.getView().getModel().getData();
-				var parser = new DOMParser();
-				var xmlDoc = parser.parseFromString(response, "text/xml");
-				var returnVal = xmlDoc.getElementsByTagName("getCausali")[0].childNodes[0].nodeValue;
-				var oData = $.parseJSON(returnVal);
+				var oData = JSON.parse(response);
 				if (oData.response.Status !== 200) {
 					var msgError = !!that.getView().$().closest(".sapUiSizeCompact").length;
 					MessageBox.error(
@@ -1892,10 +1855,7 @@ sap.ui.define([
 
 			function getCom4Model(that) {
 				var oArray = that.getView().getModel().getData();
-				var parser = new DOMParser();
-				var xmlDoc = parser.parseFromString(response, "text/xml");
-				var returnVal = xmlDoc.getElementsByTagName("com4")[0].childNodes[0].nodeValue;
-				var oData = $.parseJSON(returnVal);
+				var oData = JSON.parse(response);
 				if (oData.response.Status !== 200) {
 					var msgError = !!that.getView().$().closest(".sapUiSizeCompact").length;
 					MessageBox.error(
@@ -1999,10 +1959,7 @@ sap.ui.define([
 
 			function getCom4Model(that) {
 				var oArray = that.getView().getModel().getData();
-				var parser = new DOMParser();
-				var xmlDoc = parser.parseFromString(response, "text/xml");
-				var returnVal = xmlDoc.getElementsByTagName("com4")[0].childNodes[0].nodeValue;
-				var oData = $.parseJSON(returnVal);
+				var oData = JSON.parse(response);
 				if (oData.response.Status !== 200) {
 					var msgError = !!that.getView().$().closest(".sapUiSizeCompact").length;
 					MessageBox.error(
@@ -2134,10 +2091,7 @@ sap.ui.define([
 			});
 
 			function getBancaliModelForAvanzamento(response, that, enableBancali) {
-				var parser = new DOMParser();
-				var xmlDoc = parser.parseFromString(response, "text/xml");
-				var returnVal = xmlDoc.getElementsByTagName("getBancali")[0].childNodes[0].nodeValue;
-				var oData = $.parseJSON(returnVal);
+				var oData = JSON.parse(response);
 				if (oData.response.Status !== 200) {
 					var msgError = !!that.getView().$().closest(".sapUiSizeCompact").length;
 					MessageBox.error(
@@ -2422,10 +2376,7 @@ sap.ui.define([
 			});
 
 			function getCheckObbligatorietaModel() {
-				var parser = new DOMParser();
-				var xmlDoc = parser.parseFromString(response, "text/xml");
-				var returnVal = xmlDoc.getElementsByTagName("checkObbligatorieta")[0].childNodes[0].nodeValue;
-				var oData = $.parseJSON(returnVal);
+				var oData = JSON.parse(response);
 				if (oData.response.Status !== 200) {
 					var msgError = !!that.getView().$().closest(".sapUiSizeCompact").length;
 					var msg = oData.response.Message + oData.controlli;
@@ -2538,10 +2489,7 @@ sap.ui.define([
 
 			function getCom5Model(that) {
 				var oArray = that.getView().getModel().getData();
-				var parser = new DOMParser();
-				var xmlDoc = parser.parseFromString(response, "text/xml");
-				var returnVal = xmlDoc.getElementsByTagName("com5")[0].childNodes[0].nodeValue;
-				var oData = $.parseJSON(returnVal);
+				var oData = JSON.parse(response);
 				if (oData.response.Status !== 200) {
 					var msgleader = !!that.getView().$().closest(".sapUiSizeCompact").length;
 					MessageBox.error(
@@ -2783,10 +2731,7 @@ sap.ui.define([
 
 			function getCom4emezzoModel(that) {
 				var oArray = that.getView().getModel().getData();
-				var parser = new DOMParser();
-				var xmlDoc = parser.parseFromString(response, "text/xml");
-				var returnVal = xmlDoc.getElementsByTagName("com4emezzo")[0].childNodes[0].nodeValue;
-				var oData = $.parseJSON(returnVal);
+				var oData = JSON.parse(response);
 				if (oData.response.Status !== 200) {
 					var msgleader = !!that.getView().$().closest(".sapUiSizeCompact").length;
 					MessageBox.error(
@@ -2952,10 +2897,7 @@ sap.ui.define([
 
 			function getLanciaLawerModel(that) {
 				var oArray = that.getView().getModel().getData();
-				var parser = new DOMParser();
-				var xmlDoc = parser.parseFromString(response, "text/xml");
-				var returnVal = xmlDoc.getElementsByTagName("lanciaLaw")[0].childNodes[0].nodeValue;
-				var oData = $.parseJSON(returnVal);
+				var oData = JSON.parse(response);
 				if (oData.response.Status !== 200) {
 					var msgleader = !!that.getView().$().closest(".sapUiSizeCompact").length;
 					MessageBox.error(
@@ -3070,10 +3012,7 @@ sap.ui.define([
 
 			function getRefreshModel(that, fromMethod) {
 				var oArray = that.getView().getModel().getData();
-				var parser = new DOMParser();
-				var xmlDoc = parser.parseFromString(response, "text/xml");
-				var returnVal = xmlDoc.getElementsByTagName("refresh")[0].childNodes[0].nodeValue;
-				var oData = $.parseJSON(returnVal);
+				var oData = JSON.parse(response);
 				if (oData.response.Status !== 200) {
 					var msgleader = !!that.getView().$().closest(".sapUiSizeCompact").length;
 					MessageBox.error(
@@ -3207,10 +3146,7 @@ sap.ui.define([
 
 			function getCom7Model(that) {
 				var oArray = that.getView().getModel().getData();
-				var parser = new DOMParser();
-				var xmlDoc = parser.parseFromString(response, "text/xml");
-				var returnVal = xmlDoc.getElementsByTagName("com7")[0].childNodes[0].nodeValue;
-				var oData = $.parseJSON(returnVal);
+				var oData = JSON.parse(response);
 				if (oData.response.Status !== 200) {
 					var msgleader = !!that.getView().$().closest(".sapUiSizeCompact").length;
 					MessageBox.error(
@@ -3425,10 +3361,7 @@ sap.ui.define([
 
 			function getCom10Model(that, stampa) {
 				var oArray = that.getView().getModel().getData();
-				var parser = new DOMParser();
-				var xmlDoc = parser.parseFromString(response, "text/xml");
-				var returnVal = xmlDoc.getElementsByTagName(stampa)[0].childNodes[0].nodeValue;
-				var oData = $.parseJSON(returnVal);
+				var oData = JSON.parse(response);
 				if (oData.response.Status !== 200) {
 					var msgleader = !!that.getView().$().closest(".sapUiSizeCompact").length;
 					MessageBox.error(
