@@ -153,7 +153,7 @@ sap.ui.define([
 			var oModel = new sap.ui.model.json.JSONModel();
 			var oUserModel = oView.getModel("userapi").getData();
 			$.ajax({
-				url: domainUrl + "getMacchinari?idcm='" + oUserModel.name + "'",
+				url: domainUrl + "getMacchinari?idcm=" + oUserModel.name + "",
 				type: "GET",
 				data: request,
 				dataType: "text",
@@ -220,7 +220,7 @@ sap.ui.define([
 					var idcm = oUserModel.name;
 					var ipmacchinario = row.ipMacchinario;
 					var chkLeader = row.chkTeamLeader;
-					getUrl = domainUrl + "loginMacchinario?idcm='" + oUserModel.name + "'&ipmacchinario='" + row.ipMacchinario + "'&cid='"; // +	leader + "'";
+					getUrl = domainUrl + "loginMacchinario?idcm=" + oUserModel.name + "&ipmacchinario=" + row.ipMacchinario + "&cid="; // +	leader + "";
 				}
 			}
 			// triggers validation
@@ -257,7 +257,7 @@ sap.ui.define([
 					that._oDialog.open();
 				}
 			} else {
-				getUrl += leader + "'";
+				getUrl += leader + "";
 				that.modelUpdateCid(leader);
 				that.loginMacchinario(that, oView, oArray, getUrl);
 			}
@@ -309,7 +309,7 @@ sap.ui.define([
 				});
 			};
 			if (selectedMacchinario.sensorId) {
-				var logoutUrl = domainUrl + "com2?sensorid='" + selectedMacchinario.sensorId + "'&completo=true";
+				var logoutUrl = domainUrl + "com2?sensorid=" + selectedMacchinario.sensorId + "&completo=true";
 				$.ajax({
 					url: logoutUrl,
 					type: "GET",
@@ -358,8 +358,8 @@ sap.ui.define([
 			this._clearTableSelection();
 			// verifico di definire un unico team leader tra gli eventuali n operatori loggati;
 			// per fare questo prendo il primo cid che è stato passato nell'url
-			var stringLoggedCid = getUrl.split("cid='")[1];
-			stringLoggedCid = stringLoggedCid.replace("'", "");
+			var stringLoggedCid = getUrl.split("cid=")[1];
+			stringLoggedCid = stringLoggedCid.replace("", "");
 			var loggedCid = stringLoggedCid.split("-");
 			if (loggedCid.length > 1) {
 				_.forEach(oData.operatori.accettati, function (n) {
@@ -444,7 +444,7 @@ sap.ui.define([
 					var idcm = oUserModel.name;
 					var ipmacchinario = row.ipMacchinario;
 					var chkLeader = row.chkTeamLeader;
-					getUrl = domainUrl + "loginMacchinario?idcm='" + idcm + "'&ipmacchinario='" + ipmacchinario + "'&cid='"; // +	leader + "'";
+					getUrl = domainUrl + "loginMacchinario?idcm=" + idcm + "&ipmacchinario=" + ipmacchinario + "&cid="; // +	leader + "";
 				}
 			}
 			// triggers validation
@@ -461,7 +461,7 @@ sap.ui.define([
 			if (chkLeader) {
 				that.handleCommandTEAM(that, oView, leader);
 			} else {
-				getUrl += leader + "'";
+				getUrl += leader + "";
 				that.modelUpdateCid(leader);
 				that.loginMacchinario(that, oView, oArray, getUrl);
 			}
@@ -526,7 +526,7 @@ sap.ui.define([
 			var ipMacchinario = macchinario.ipMacchinario
 			var cidValue = oUsersDialogModel.getProperty("/inputValue");
 			var url = domainUrl + "aggiungiUtente" +
-				"?ipmacchinario='" + ipMacchinario + "'&cid='" + cidValue + "'&idsessione='" + idSessione + "'";
+				"?ipmacchinario=" + ipMacchinario + "&cid=" + cidValue + "&idsessione=" + idSessione + "";
 			this.usersDialog.setBusy(true);
 			$.ajax({
 				url: url,
@@ -585,7 +585,7 @@ sap.ui.define([
 			}
 			var oUserModel = oView.getModel("userapi").getData();
 			getUrl = domainUrl + "getBancali" +
-				"?ipmacchinario='" + ipMacchinario + "'";
+				"?ipmacchinario=" + ipMacchinario + "";
 			sap.ui.core.BusyIndicator.show();
 			$.ajax({
 				url: getUrl,
@@ -765,10 +765,10 @@ sap.ui.define([
 				}
 			}
 
-			getUrl = domainUrl + "getScheda?ordine='" +
+			getUrl = domainUrl + "getScheda?ordine=" +
 				oBindingObject.ordine +
-				"'&operazione='" +
-				oBindingObject.operazione + "'";
+				"&operazione=" +
+				oBindingObject.operazione + "";
 
 			sap.ui.core.BusyIndicator.show();
 			$.ajax({
@@ -839,12 +839,12 @@ sap.ui.define([
 			});
 			var ipmacchinario = macchinario.ipMacchinario;
 			var bancali = macchinario.bancali;
-			getUrl = domainUrl + "riep?ordine='" +
+			getUrl = domainUrl + "riep?ordine=" +
 				oBindingObject.ordine +
-				"'&operazione='" +
+				"&operazione=" +
 				oBindingObject.operazione +
-				"'&ipmacchinario='" +
-				ipmacchinario + "'";
+				"&ipmacchinario=" +
+				ipmacchinario + "";
 			sap.ui.core.BusyIndicator.show();
 			$.ajax({
 				url: getUrl,
@@ -1001,9 +1001,9 @@ sap.ui.define([
 			var azione = selectedSospensione.azione ? selectedSospensione.azione : "";
 			var noteCausali = selectedSospensione.noteCausali ? selectedSospensione.noteCausali : "";
 			var noteAzioni = selectedSospensione.noteAzioni ? selectedSospensione.noteAzioni : "";
-			getUrl = domainUrl + "updateSospensioneRiep?progressivo=" + selectedSospensione.progressivo + "&causale='" + causale +
-				"'&notecausale='" + noteCausali + "'&azione='" + azione + "'&noteazione='" + noteAzioni +
-				"'";
+			getUrl = domainUrl + "updateSospensioneRiep?progressivo=" + selectedSospensione.progressivo + "&causale=" + causale +
+				"&notecausale=" + noteCausali + "&azione=" + azione + "&noteazione=" + noteAzioni +
+				"";
 			sap.ui.core.BusyIndicator.show();
 			$.ajax({
 				url: getUrl,
@@ -1156,7 +1156,7 @@ sap.ui.define([
 						cid += "-" + oUser.utenti[i].cid;
 					}
 				}
-				getUrl += cid + "'";
+				getUrl += cid + "";
 				that.modelUpdateCid(cid);
 				that.loginMacchinario(that, oView, oArray, getUrl);
 				if (that._oDialog) {
@@ -1340,8 +1340,8 @@ sap.ui.define([
 			var response = "";
 			var oModel = new sap.ui.model.json.JSONModel();
 			var oUserModel = oView.getModel("userapi").getData();
-			getUrl = domainUrl + "com1?ordine='" + ordine + "'&operazione='" + operazione + "'&ipmacchinario='" + ipmacchinario +
-				"'&idsessione='" + idsessione + "'";
+			getUrl = domainUrl + "com1?ordine=" + ordine + "&operazione=" + operazione + "&ipmacchinario=" + ipmacchinario +
+				"&idsessione=" + idsessione + "";
 			sap.ui.core.BusyIndicator.show();
 			$.ajax({
 				url: getUrl,
@@ -1489,14 +1489,14 @@ sap.ui.define([
 			if (typeof (oEvent) !== "undefined") {
 				if (checkUsers(operatore, cid)) {
 					completo = checkCompleto(operatore, cid);
-					getUrl = domainUrl + "com2?idsessione='" + idsessione + "'&ipmacchinario='" + ipmacchinario + "'&operatore='" +
-						operatore + "'&completo=" + completo;
+					getUrl = domainUrl + "com2?idsessione=" + idsessione + "&ipmacchinario=" + ipmacchinario + "&operatore=" +
+						operatore + "&completo=" + completo;
 					sendCOM2(that, getUrl, operatore, completo);
 				}
 			} else {
 				completo = true;
-				getUrl = domainUrl + "com2?idsessione='" + idsessione + "'&ipmacchinario='" + ipmacchinario + "'&operatore='" +
-					operatore + "'&completo=" + completo;
+				getUrl = domainUrl + "com2?idsessione=" + idsessione + "&ipmacchinario=" + ipmacchinario + "&operatore=" +
+					operatore + "&completo=" + completo;
 				sendCOM2(that, getUrl, operatore, completo);
 			}
 			if (this._oDialog) {
@@ -1685,10 +1685,10 @@ sap.ui.define([
 			var operatore = selectedMacchinario.cid;
 			var ipmacchinario = selectedMacchinario.ipMacchinario;
 			if (!ordine) {
-				getUrl = domainUrl + "getCausali?operatore='" + operatore + "'&ipmacchinario='" + ipmacchinario + "'&causale='SIOT'";
+				getUrl = domainUrl + "getCausali?operatore=" + operatore + "&ipmacchinario=" + ipmacchinario + "&causale='SIOT'";
 			} else {
-				getUrl = domainUrl + "getCausali?ordine='" + ordine + "'&operazione='" + operazione +
-					"'&operatore='" + operatore + "'&ipmacchinario='" + ipmacchinario + "'&causale='SIOT'";
+				getUrl = domainUrl + "getCausali?ordine=" + ordine + "&operazione=" + operazione +
+					"&operatore=" + operatore + "&ipmacchinario=" + ipmacchinario + "&causale='SIOT'";
 			}
 			sap.ui.core.BusyIndicator.show();
 			$.ajax({
@@ -1827,9 +1827,9 @@ sap.ui.define([
 							azione = oModelCOM4.oData.causali[idx].azioneSelected;
 							noteazioni = oModelCOM4.oData.causali[idx].noteazioni;
 						}
-						getUrl = domainUrl + "com4?ordine='" + ordine + "'&operazione='" + operazione +
-							"'&operatore='" + operatore + "'&ipmacchinario='" + ipmacchinario + "'&causale='" + causale + "'&azione='" + azione +
-							"'&notecausali='" + notecausali + "'&noteazioni='" + noteazioni + "'";
+						getUrl = domainUrl + "com4?ordine=" + ordine + "&operazione=" + operazione +
+							"&operatore=" + operatore + "&ipmacchinario=" + ipmacchinario + "&causale=" + causale + "&azione=" + azione +
+							"&notecausali=" + notecausali + "&noteazioni=" + noteazioni + "";
 						sendCOM4(that, getUrl);
 					}
 				} else {
@@ -1838,9 +1838,9 @@ sap.ui.define([
 					notecausali = "";
 					azione = "";
 					noteazioni = "";
-					getUrl = domainUrl + "com4?ordine='" + ordine + "'&operazione='" + operazione +
-						"'&operatore='" + operatore + "'&ipmacchinario='" + ipmacchinario + "'&causale='" + causale + "'&azione='" + azione +
-						"'&notecausali='" + notecausali + "'&noteazioni='" + noteazioni + "'";
+					getUrl = domainUrl + "com4?ordine=" + ordine + "&operazione=" + operazione +
+						"&operatore=" + operatore + "&ipmacchinario=" + ipmacchinario + "&causale=" + causale + "&azione=" + azione +
+						"&notecausali=" + notecausali + "&noteazioni=" + noteazioni + "";
 					sendCOM4(that, getUrl);
 				}
 			} else {
@@ -1950,8 +1950,8 @@ sap.ui.define([
 				delete(row.stoppedMeasure);
 			}
 
-			var getUrl = domainUrl + "com4?ordine='" + ordine + "'&operazione='" + operazione +
-				"'&operatore='" + operatore + "'&ipmacchinario='" + ipmacchinario + "'&causale='FINE'";
+			var getUrl = domainUrl + "com4?ordine=" + ordine + "&operazione=" + operazione +
+				"&operatore=" + operatore + "&ipmacchinario=" + ipmacchinario + "&causale='FINE'";
 			sendCOM4(that, getUrl);
 
 			if (this._oDialog) {
@@ -2084,7 +2084,7 @@ sap.ui.define([
 				return;
 			}
 			getUrl = domainUrl + "getBancali" +
-				"?ipmacchinario='" + oOperazioneModel.ipMacchinario + "'";
+				"?ipmacchinario=" + oOperazioneModel.ipMacchinario + "";
 			sap.ui.core.BusyIndicator.show();
 			$.ajax({
 				url: getUrl,
@@ -2383,7 +2383,7 @@ sap.ui.define([
 				versfin = true;
 			}
 			getUrl = domainUrl + "checkObbligatorieta" +
-				"?ordine='" + oModelCOM4emezzo.oData.ordine + "'&operazione='" + oModelCOM4emezzo.oData.operazione + "'&versfin=" + versfin;
+				"?ordine=" + oModelCOM4emezzo.oData.ordine + "&operazione=" + oModelCOM4emezzo.oData.operazione + "&versfin=" + versfin;
 			sap.ui.core.BusyIndicator.show();
 			$.ajax({
 				url: getUrl,
@@ -2474,30 +2474,30 @@ sap.ui.define([
 			var scartoToSend = !dataModel.scarto ? 0 : parseFloat(dataModel.scarto);
 			if (!idbancale) {
 				var getUrl = domainUrl + "com5?" +
-					"ordine='" + dataModel.ordine +
-					"'&operazione='" + dataModel.operazione +
-					"'&ipmacchinario='" + dataModel.ipMacchinario +
-					"'&cid='" + cid +
-					"'&completo=" + completo +
+					"ordine=" + dataModel.ordine +
+					"&operazione=" + dataModel.operazione +
+					"&ipmacchinario=" + dataModel.ipMacchinario +
+					"&cid=" + cid +
+					"&completo=" + completo +
 					"&pf=" + dataModel.pf +
 					"&scarto=" + scartoToSend +
-					"&noteazioni='" + noteazioni +
-					"'&idsessione='" + dataModel.idsessione + "'";
+					"&noteazioni=" + noteazioni +
+					"&idsessione=" + dataModel.idsessione + "";
 			} else {
 				var getUrl = domainUrl + "com5?" +
-					"ordine='" + dataModel.ordine +
-					"'&operazione='" + dataModel.operazione +
-					"'&ipmacchinario='" + dataModel.ipMacchinario +
-					"'&cid='" + cid +
-					"'&completo=" + completo +
+					"ordine=" + dataModel.ordine +
+					"&operazione=" + dataModel.operazione +
+					"&ipmacchinario=" + dataModel.ipMacchinario +
+					"&cid=" + cid +
+					"&completo=" + completo +
 					"&pf=" + dataModel.pf +
 					"&scarto=" + scartoToSend +
-					"&noteazioni='" + noteazioni +
-					"'&idsessione='" + dataModel.idsessione +
-					"'&idbancale='" + idbancale +
-					"'&bancaleCompleto=" + bancaleCompleto;
+					"&noteazioni=" + noteazioni +
+					"&idsessione=" + dataModel.idsessione +
+					"&idbancale=" + idbancale +
+					"&bancaleCompleto=" + bancaleCompleto;
 			}
-			getUrl += "&pfString='" + dataModel.pf + "'";
+			getUrl += "&pfString=" + dataModel.pf + "";
 			sendCOM4emezzo(that, getUrl);
 
 			function sendCOM4emezzo(that, getUrl) {
@@ -2724,16 +2724,16 @@ sap.ui.define([
 					var scartoToSend = !componentToSend.scarto ? "0" : componentToSend.scarto;
 					var consumoToSend = !componentToSend.consumoConfermato ? "0" : componentToSend.consumoConfermato;
 					var getUrl = domainUrl + "com4emezzo?" +
-						"&ordine='" + oModelCOM4emezzo.oData.ordine +
-						"'&operazione='" + oModelCOM4emezzo.oData.operazione +
-						"'&componente='" + componentToSend.componente +
-						"'&descrizioneComponente='" + componentToSend.descrizioneComponente +
-						"'&ipmacchinario='" + oModelCOM4emezzo.oData.ipMacchinario +
-						"'&idsessione='" + oModelCOM4emezzo.oData.idsessione +
-						"'&lotto='" + lottoToSend +
-						"'&um='" + componentToSend.um +
-						"'&consumo='" + consumoToSend +
-						"'&scarto='" + scartoToSend + "'";
+						"&ordine=" + oModelCOM4emezzo.oData.ordine +
+						"&operazione=" + oModelCOM4emezzo.oData.operazione +
+						"&componente=" + componentToSend.componente +
+						"&descrizioneComponente=" + componentToSend.descrizioneComponente +
+						"&ipmacchinario=" + oModelCOM4emezzo.oData.ipMacchinario +
+						"&idsessione=" + oModelCOM4emezzo.oData.idsessione +
+						"&lotto=" + lottoToSend +
+						"&um=" + componentToSend.um +
+						"&consumo=" + consumoToSend +
+						"&scarto=" + scartoToSend + "";
 					if (componentToSend.progressivo) {
 						getUrl += "&progressivo=" + componentToSend.progressivo + "";
 					}
@@ -2904,14 +2904,14 @@ sap.ui.define([
 			}
 
 			var getUrl = domainUrl + "lanciaLaw?" +
-				"ordine='" + oModelLanciaLawe.oData.ordine +
-				"'&operazione='" + oModelLanciaLawe.oData.operazione +
-				"'&sequenza='" + oModelLanciaLawe.oData.sequenza +
-				"'&ipmacchinario='" + oModelLanciaLawe.oData.ipMacchinario +
-				"'&cid='" + cid +
-				"'&cdl='" + oModelLanciaLawe.oData.centroDiLavoro +
-				"'&componente='" + componente +
-				"'&execlawer='" + execlawer + "'";
+				"ordine=" + oModelLanciaLawe.oData.ordine +
+				"&operazione=" + oModelLanciaLawe.oData.operazione +
+				"&sequenza=" + oModelLanciaLawe.oData.sequenza +
+				"&ipmacchinario=" + oModelLanciaLawe.oData.ipMacchinario +
+				"&cid=" + cid +
+				"&cdl=" + oModelLanciaLawe.oData.centroDiLavoro +
+				"&componente=" + componente +
+				"&execlawer=" + execlawer + "";
 			sendLanciaLawer(that, getUrl);
 
 			function sendLanciaLawer(that, getUrl) {
@@ -3002,7 +3002,7 @@ sap.ui.define([
 				}
 			}
 			var getUrl = domainUrl + "refresh?" +
-				"'&ipmacchinario='" + ipMacchinario + "'";
+				"&ipmacchinario=" + ipMacchinario + "";
 			sendRefresh(that, getUrl);
 
 			function sendRefresh(that, getUrl) {
@@ -3154,10 +3154,10 @@ sap.ui.define([
 				}
 			}
 			var getUrl = domainUrl + "com7?" +
-				"articolo='" + articolo +
-				"'&idsessione='" + idsessione +
-				"'&ipmacchinario='" + ipmacchinario +
-				"'";
+				"articolo=" + articolo +
+				"&idsessione=" + idsessione +
+				"&ipmacchinario=" + ipmacchinario +
+				"";
 
 			if (articolo === "") {
 				that.messageError(that, "Inserire un articolo!");
@@ -3347,34 +3347,34 @@ sap.ui.define([
 			switch (printID) {
 			case 0: // Stampa etichette
 				var getUrl = domainUrl + "stampaTermica?" +
-					"ordine='" + oModel.oData.ordine +
-					"'&operazione='" + oModel.oData.operazione +
-					"'&tipo='" + "T" +
-					"'&operatore='" + cid +
-					"'&numeroetichette=" + numeroetichette +
+					"ordine=" + oModel.oData.ordine +
+					"&operazione=" + oModel.oData.operazione +
+					"&tipo=" + "T" +
+					"&operatore=" + cid +
+					"&numeroetichette=" + numeroetichette +
 					"&quantita=" + quantita +
-					"&ipmacchinario='" + oModel.oData.ipMacchinario +
-					"'";
+					"&ipmacchinario=" + oModel.oData.ipMacchinario +
+					"";
 				stampa = "stampaTermica";
 				break;
 			case 1: // Marcatore Laser
 				var getUrl = domainUrl + "stampaMarcatoreLaser?" +
-					"ordine='" + oModel.oData.ordine +
-					"'&operazione='" + oModel.oData.operazione +
-					"'&ipmacchinario='" + oModel.oData.ipMacchinario +
-					"'";
+					"ordine=" + oModel.oData.ordine +
+					"&operazione=" + oModel.oData.operazione +
+					"&ipmacchinario=" + oModel.oData.ipMacchinario +
+					"";
 				stampa = "stampaMarcatoreLaser";
 				break;
 			case 2: // Stampa tipo Q
 				var getUrl = domainUrl + "stampaTermica?" +
-					"ordine='" + oModel.oData.ordine +
-					"'&operazione='" + oModel.oData.operazione +
-					"'&tipo='" + "Q" +
-					"'&operatore='" + oModel.oData.cid +
-					"'&numeroetichette=" + numeroetichette +
+					"ordine=" + oModel.oData.ordine +
+					"&operazione=" + oModel.oData.operazione +
+					"&tipo=" + "Q" +
+					"&operatore=" + oModel.oData.cid +
+					"&numeroetichette=" + numeroetichette +
 					"&quantita=" + quantita +
-					"&ipmacchinario='" + oModel.oData.ipMacchinario +
-					"'";
+					"&ipmacchinario=" + oModel.oData.ipMacchinario +
+					"";
 				stampa = "stampaTermica";
 				break;
 			default:
