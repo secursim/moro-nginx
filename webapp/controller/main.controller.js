@@ -77,9 +77,14 @@ sap.ui.define([
 		},
 
 		_getUserLogged: function (data) {
-			var userModel = new sap.ui.model.json.JSONModel();
+			var userModel;
+			if (!this.getView().getModel("userapi")) {
+				userModel = new sap.ui.model.json.JSONModel();	
+				this.getView().setModel(userModel, "userapi");
+			} else {
+				userModel = this.getView().getModel("userapi");
+			}
 			userModel.setData(JSON.parse(data));
-			this.getView().setModel(userModel, "userapi");
 			this.getMacchinari();
 			var oTabContainer = this.getView().byId("myTabContainer");
 			oTabContainer.addStyleClass("tabContainer");
