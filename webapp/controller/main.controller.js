@@ -176,9 +176,14 @@ sap.ui.define([
 
 			function getMacchinariModel() {
 				var parser = new DOMParser();
-				var xmlDoc = parser.parseFromString(response, "text/xml");
-				var returnVal = xmlDoc.getElementsByTagName("getMacchinari")[0].childNodes[0].nodeValue;
-				var oData = $.parseJSON(returnVal);
+				var oData;
+				if (typeof(response) === "string" && response.indexOf("400") > 0) {
+					oData = JSON.parse(response);
+				} else {
+					var xmlDoc = parser.parseFromString(response, "text/xml");
+					var returnVal = xmlDoc.getElementsByTagName("getMacchinari")[0].childNodes[0].nodeValue;
+					oData = $.parseJSON(returnVal);
+				}
 				if (oData.response.Status !== 200) {
 					var msgError = !!that.getView().$().closest(".sapUiSizeCompact").length;
 					MessageBox.error(
@@ -186,6 +191,7 @@ sap.ui.define([
 							styleClass: msgError ? "sapUiSizeCompact" : ""
 						}
 					);
+					return {};
 				}
 				for (var i = 0; i < oData.impianti.length; i++) {
 					oData.impianti[i].cid = "";
