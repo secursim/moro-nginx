@@ -993,7 +993,7 @@ sap.ui.define([
 			sap.ui.core.BusyIndicator.show();
 			$.ajax({
 				url: getUrl,
-				type: "POST",
+				type: "GET",
 				data: "",
 				dataType: "text",
 				contentType: "application/x-www-form-urlencoded",
@@ -1829,7 +1829,7 @@ sap.ui.define([
 				sap.ui.core.BusyIndicator.show();
 				$.ajax({
 					url: getUrl,
-					type: "POST",
+					type: "GET",
 					data: request,
 					dataType: "text",
 					contentType: "application/x-www-form-urlencoded",
@@ -1934,7 +1934,7 @@ sap.ui.define([
 				sap.ui.core.BusyIndicator.show();
 				$.ajax({
 					url: getUrl,
-					type: "POST",
+					type: "GET",
 					data: request,
 					dataType: "text",
 					contentType: "application/x-www-form-urlencoded",
@@ -2466,7 +2466,7 @@ sap.ui.define([
 				sap.ui.core.BusyIndicator.show();
 				$.ajax({
 					url: getUrl,
-					type: "POST",
+					type: "GET",
 					data: request,
 					dataType: "text",
 					contentType: "application/x-www-form-urlencoded",
