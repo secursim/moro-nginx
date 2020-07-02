@@ -777,7 +777,11 @@ sap.ui.define([
 				},
 				complete: function (xhr, status) {
 					sap.ui.core.BusyIndicator.hide();
-					var base64EncodedPDF = getBase64EncodedPDF(); // the encoded string
+					if (!response) {
+						sap.m.MessageBox.error("Scheda prodotto non presente");
+						return;
+					}
+					var base64EncodedPDF = response;
 					var decodedPdfContent = atob(base64EncodedPDF);
 					var byteArray = new Uint8Array(decodedPdfContent.length)
 					for (var i = 0; i < decodedPdfContent.length; i++) {
@@ -799,14 +803,13 @@ sap.ui.define([
 			});
 
 			function getBase64EncodedPDF() {
-				var parser = new DOMParser();
+				if (!response)
+					var parser = new DOMParser();
 				var xmlDoc = parser.parseFromString(response, "text/xml");
 				var returnVal = "";
 				if (xmlDoc.getElementsByTagName("getScheda")[0].childNodes.length) {
 					returnVal = xmlDoc.getElementsByTagName("getScheda")[0].childNodes[0].nodeValue;
-					return returnVal;
 				}
-				sap.m.MessageBox.error("Scheda prodotto non presente");
 			}
 		},
 
@@ -2051,8 +2054,7 @@ sap.ui.define([
 				sap.ui.core.BusyIndicator.hide();
 				return;
 			}
-			getUrl = domainUrl + "getBancali" +
-				"?ipmacchinario=" + oOperazioneModel.ipMacchinario + "";
+			getUrl = domainUrl + "getBancali?ipmacchinario=" + oOperazioneModel.ipMacchinario + "";
 			sap.ui.core.BusyIndicator.show();
 			$.ajax({
 				url: getUrl,
@@ -2119,13 +2121,13 @@ sap.ui.define([
 				for (var i = 0; i < oData.bancali.length; i++) {
 					oData.bancali[i].bancaleCompleto = false;
 				}
-				var i = returnVal.search("bancali");
-				var oRaw = "{" + returnVal.substring(i - 1);
+				var i = response.search("bancali");
+				var oRaw = "{" + response.substring(i - 1);
 				var oNuovo;
 				if (enableBancali) {
 					oNuovo =
 						"{\"bancali\":[{\"idBancale\": \"NUOVO\",\"dataCreazione\": \"2020-01-01\",\"versamenti\": [{\"descrizioneArticolo\": \"\",\"quantita\": 0.0,\"quantitaColli\": 0.0}]}, ";
-					if (returnVal === "{\"response\":{\"Status\":200,\"Message\":\"Bancali estratti!\"},\"bancali\":[]}") {
+					if (response === "{\"response\":{\"Status\":200,\"Message\":\"Bancali estratti!\"},\"bancali\":[]}") {
 						oNuovo =
 							"{\"bancali\":[{\"idBancale\": \"NUOVO\",\"dataCreazione\": \"2020-01-01\",\"versamenti\": [{\"descrizioneArticolo\": \"\",\"quantita\": 0.0,\"quantitaColli\": 0.0}]}";
 					}
