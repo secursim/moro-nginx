@@ -535,7 +535,7 @@ sap.ui.define([
 				dataType: "text",
 				contentType: "application/x-www-form-urlencoded",
 				success: function (data, textStatus, jqXHR) {
-					var oData = JSON.parse(response);
+					var oData = JSON.parse(data);
 					if (oData.response.Status === 200) {
 						// se sto aggiungendo un macchinario significa che sono teamLeader e quindi setto la seguente proprietà a true
 						macchinario.chkTeamLeader = true;
@@ -1006,7 +1006,7 @@ sap.ui.define([
 				},
 				complete: function (xhr, status) {
 					sap.ui.core.BusyIndicator.hide();
-				var oData = JSON.parse(response);
+					var oData = JSON.parse(response);
 					if (oData.response.Status !== 200) {
 						var msgError = !!this.getView().$().closest(".sapUiSizeCompact").length;
 						MessageBox.error(
@@ -1664,7 +1664,8 @@ sap.ui.define([
 			if (!ordine) {
 				getUrl = domainUrl + "getCausali?operatore=" + operatore + "&ipmacchinario=" + ipmacchinario + "&causale=SIOT";
 			} else {
-				getUrl = domainUrl + "getCausali?ordine=" + ordine + "&operazione=" + operazione + "&operatore=" + operatore + "&ipmacchinario=" + ipmacchinario + "&causale=SIOT";
+				getUrl = domainUrl + "getCausali?ordine=" + ordine + "&operazione=" + operazione + "&operatore=" + operatore + "&ipmacchinario=" +
+					ipmacchinario + "&causale=SIOT";
 			}
 			sap.ui.core.BusyIndicator.show();
 			$.ajax({
