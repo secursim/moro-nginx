@@ -33,7 +33,7 @@
 														<GenericTile xmlns:action="http://schemas.sap.com/sapui5/extension/sap.ui.core.CustomData/1"
 															class="sapUiTinyMarginBegin sapUiTinyMarginTop tileLayout myAvanzamentoTile" header="Avanzamento" subheader="Versamenti di Produzione"
 															frameType="OneByOne" id="ZP01_COM5" fieldGroupIds="ZP01" press="handleCommandCOM4emezzo"
-															visible="{= ${chiaveComando} === 'ZP01' || ${chiaveComando} === 'ZP03' || ${chiaveComando} === 'QP01' || ${chiaveComando} === 'QP03'}">
+															visible="{= ${chiaveComando} === 'ZP01' || ${chiaveComando} === 'ZP03' || ${chiaveComando} === 'QP01' || ${chiaveComando} === 'QP03' || ${chiaveComando} === 'PP01' || ${chiaveComando} === 'PP03'}">
 															<TileContent>
 																<ImageContent src="sap-icon://timesheet"/>
 															</TileContent>
@@ -42,7 +42,7 @@
 														<GenericTile xmlns:action="http://schemas.sap.com/sapui5/extension/sap.ui.core.CustomData/1"
 															class="sapUiTinyMarginBegin sapUiTinyMarginTop tileLayout myScartoTile" header="Scarto componenti" subheader="Dich. Scarti"
 															frameType="OneByOne" id="ZP01_COM6" fieldGroupIds="ZP01" press="handleCommandCOM6"
-															visible="{= ${chiaveComando} === 'QP01' || ${chiaveComando} === 'QP03' || ${chiaveComando} === 'QPD1' || ${chiaveComando} === 'ZP01' || ${chiaveComando} === 'ZP03'}">
+															visible="{= ${chiaveComando} === 'QP01' || ${chiaveComando} === 'QP03' || ${chiaveComando} === 'QPD1' || ${chiaveComando} === 'ZP01' || ${chiaveComando} === 'ZP03' || ${chiaveComando} === 'PP01' || ${chiaveComando} === 'PP03'}">
 															<TileContent>
 																<ImageContent src="sap-icon://clear-filter"/>
 															</TileContent>
