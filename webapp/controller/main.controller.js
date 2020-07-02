@@ -1346,7 +1346,7 @@ sap.ui.define([
 				},
 				complete: function (xhr, status) {
 					sap.ui.core.BusyIndicator.hide();
-					that.getCom1Model();
+					getCom1Model();
 				}
 			});
 
