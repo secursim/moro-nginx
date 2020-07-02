@@ -1662,10 +1662,9 @@ sap.ui.define([
 			var operatore = selectedMacchinario.cid;
 			var ipmacchinario = selectedMacchinario.ipMacchinario;
 			if (!ordine) {
-				getUrl = domainUrl + "getCausali?operatore=" + operatore + "&ipmacchinario=" + ipmacchinario + "&causale='SIOT'";
+				getUrl = domainUrl + "getCausali?operatore=" + operatore + "&ipmacchinario=" + ipmacchinario + "&causale=SIOT";
 			} else {
-				getUrl = domainUrl + "getCausali?ordine=" + ordine + "&operazione=" + operazione +
-					"&operatore=" + operatore + "&ipmacchinario=" + ipmacchinario + "&causale='SIOT'";
+				getUrl = domainUrl + "getCausali?ordine=" + ordine + "&operazione=" + operazione + "&operatore=" + operatore + "&ipmacchinario=" + ipmacchinario + "&causale=SIOT";
 			}
 			sap.ui.core.BusyIndicator.show();
 			$.ajax({
@@ -1922,7 +1921,7 @@ sap.ui.define([
 			}
 
 			var getUrl = domainUrl + "com4?ordine=" + ordine + "&operazione=" + operazione +
-				"&operatore=" + operatore + "&ipmacchinario=" + ipmacchinario + "&causale='FINE'";
+				"&operatore=" + operatore + "&ipmacchinario=" + ipmacchinario + "&causale=FINE";
 			sendCOM4(that, getUrl);
 
 			if (this._oDialog) {
