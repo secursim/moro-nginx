@@ -1346,8 +1346,7 @@ sap.ui.define([
 				},
 				complete: function (xhr, status) {
 					sap.ui.core.BusyIndicator.hide();
-					that.onRefresh();
-					// oView.setModel(getCom1Model(that));
+					that.getCom1Model();
 				}
 			});
 
@@ -1366,28 +1365,7 @@ sap.ui.define([
 						duration: 2000
 					});
 				}
-				for (var i = 0; i < oArray.impianti.length; i++) {
-					var row = oArray.impianti[i];
-					if (row.impianto === itemSelected) {
-						row.centroDiLavoro = oData.impianto.centroDiLavoro;
-						row.operazioni = that._setOperazioniOrder(oData.impianto.operazioni);
-						row.statoMacchinario = oData.impianto.statoMacchinario;
-						row.icon = row.statoMacchinario === "SOSP" ? "sap-icon://alert" : "sap-icon://instance";
-						row.login = "true";
-						for (var j = 0; j < row.operazioni.length; j++) {
-							if (row.operazioni[j].statoOperazione === "EXEC" && row.operazioni[j].ipMacchinarioExec === ipMacchinarioSelected) {
-								row.operazioni[j].statoOperazioneEnh = "EXEC"
-							} else if (row.operazioni[j].statoOperazione === "EXEC" && row.operazioni[j].ipMacchinarioExec != ipMacchinarioSelected) {
-								row.operazioni[j].statoOperazioneEnh = "EXET"
-							} else {
-								row.operazioni[j].statoOperazioneEnh = row.operazioni[j].statoOperazione;
-							}
-						}
-						oModel.setData(oArray);
-						oModel.updateBindings();
-					}
-				}
-				return oModel;
+				that.onRefresh();
 			}
 		},
 
@@ -2484,9 +2462,7 @@ sap.ui.define([
 					},
 					complete: function (xhr, status) {
 						sap.ui.core.BusyIndicator.hide();
-						that.onRefresh();
-						// oView.setModel(getCom5Model(that));
-						operationSelected = "";
+						getCom5Model(that);
 					}
 				});
 			}
@@ -2506,32 +2482,7 @@ sap.ui.define([
 						duration: 500
 					});
 				}
-				for (var i = 0; i < oArray.impianti.length; i++) {
-					var row = oArray.impianti[i];
-					if (row.impianto === itemSelected) {
-						row.centroDiLavoro = oData.impianto.centroDiLavoro;
-						row.chiaveComando = oData.impianto.operazioni.length ? oData.impianto.operazioni[0].chiaveComando : "";
-						row.statoMacchinario = oData.impianto.statoMacchinario;
-						if (row.statoMacchinario === "SOSP") {
-							row.icon = "sap-icon://alert";
-						} else {
-							row.icon = "sap-icon://instance";
-						}
-						row.operazioni = that._setOperazioniOrder(oData.impianto.operazioni);
-						row.login = "true";
-						for (var j = 0; j < row.operazioni.length; j++) {
-							if (row.operazioni[j].statoOperazione === "EXEC" && row.operazioni[j].ipMacchinarioExec === ipMacchinarioSelected) {
-								row.operazioni[j].statoOperazioneEnh = "EXEC"
-							} else if (row.operazioni[j].statoOperazione === "EXEC" && row.operazioni[j].ipMacchinarioExec != ipMacchinarioSelected) {
-								row.operazioni[j].statoOperazioneEnh = "EXET"
-							} else {
-								row.operazioni[j].statoOperazioneEnh = row.operazioni[j].statoOperazione;
-							}
-						}
-						oModel.setData(oArray);
-					}
-				}
-				return oModel;
+				that.onRefresh();
 			}
 		},
 
@@ -2958,8 +2909,7 @@ sap.ui.define([
 					ipMacchinario = row.ipMacchinario;
 				}
 			}
-			var getUrl = domainUrl + "refresh?" +
-				"&ipmacchinario=" + ipMacchinario + "";
+			var getUrl = domainUrl + "refresh?" + "&ipmacchinario=" + ipMacchinario + "";
 			sendRefresh(that, getUrl);
 
 			function sendRefresh(that, getUrl) {
