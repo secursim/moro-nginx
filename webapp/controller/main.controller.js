@@ -1346,7 +1346,8 @@ sap.ui.define([
 				},
 				complete: function (xhr, status) {
 					sap.ui.core.BusyIndicator.hide();
-					oView.setModel(getCom1Model(that));
+					that.onRefresh();
+					// oView.setModel(getCom1Model(that));
 				}
 			});
 
@@ -2483,7 +2484,8 @@ sap.ui.define([
 					},
 					complete: function (xhr, status) {
 						sap.ui.core.BusyIndicator.hide();
-						oView.setModel(getCom5Model(that));
+						that.onRefresh();
+						// oView.setModel(getCom5Model(that));
 						operationSelected = "";
 					}
 				});
