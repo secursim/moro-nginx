@@ -1670,7 +1670,7 @@ sap.ui.define([
 					if (!that._oDialog) {
 						Fragment.load({
 							id: "fragmentCOM4",
-							name: "it.greenorange.mes.view.COM4",
+							name: "it.greenorange.mes.view.fragmentCOM4",
 							controller: that
 						}).then(function (oDialog) {
 							that._oDialog = oDialog;
@@ -2557,7 +2557,7 @@ sap.ui.define([
 			if (!that._oDialog) {
 				Fragment.load({
 					id: "fragmentNavCon",
-					name: "it.greenorange.mes.view.COM6",
+					name: "it.greenorange.mes.view.fragmentCOM6",
 					controller: that
 				}).then(function (oDialog) {
 					that._oDialog = oDialog;
@@ -3022,7 +3022,7 @@ sap.ui.define([
 
 			if (!that._oDialog) {
 				Fragment.load({
-					name: "it.greenorange.mes.view.COM7",
+					name: "it.greenorange.mes.view.fragmentCOM7",
 					controller: that
 				}).then(function (oDialog) {
 					that._oDialog = oDialog;
